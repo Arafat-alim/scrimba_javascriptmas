@@ -22,6 +22,22 @@ For example, only one of these entries should be added to the list — the other
 2. Additional Features: Add functionality to delete or edit items on the list.
 */
 
+if (!String.prototype.capitalize) {
+  String.prototype.capitalize = function () {
+    if (typeof this !== "string") {
+      throw new TypeError("Input must be a string. Received: " + this);
+    }
+
+    // Capitalize each word
+    const capitalizedWords = this.toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+
+    // Join and return the result
+    return capitalizedWords.join(" ");
+  };
+}
+
 // Get references to DOM elements
 const itemInput = document.getElementById("item-input");
 const addItemButton = document.getElementById("add-item-button");
@@ -33,7 +49,16 @@ function checkDuplicate() {
   /* ⚠️ You need to add code to this function! ⚠️*/
 
   const itemText = itemInput.value;
-  listArr.push(itemText.trim().replace(/\s{2,}/g, " "));
+  let finalCheck = itemText
+    .trim()
+    .replace(/\s{2,}/g, " ")
+    .capitalize();
+  if (listArr.includes(finalCheck)) {
+    alert("grandpa");
+  } else {
+    listArr.push(finalCheck);
+  }
+
   renderList();
 }
 
